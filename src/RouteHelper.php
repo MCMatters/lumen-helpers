@@ -57,9 +57,9 @@ class RouteHelper
         string $closureAs = null
     ): array {
         return [
-            'method'     => Arr::get($route, 'method'),
-            'uri'        => Arr::get($route, 'uri'),
-            'name'       => Arr::get($route, 'action.as'),
+            'method'     => Arr::get($route, 'method', ''),
+            'uri'        => Arr::get($route, 'uri', ''),
+            'name'       => Arr::get($route, 'action.as', ''),
             'action'     => self::getRouteAction($route, $closureAs),
             'middleware' => self::getRouteMiddleware($route, $closureAs),
         ];
@@ -75,7 +75,7 @@ class RouteHelper
         array $route,
         string $closureAs = null
     ): string {
-        $action = Arr::get($route, 'action.uses');
+        $action = Arr::get($route, 'action.uses', '');
 
         return $action instanceof Closure ? $closureAs : $action;
     }
