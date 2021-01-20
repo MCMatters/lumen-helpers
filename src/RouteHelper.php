@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\LumenHelpers;
 
@@ -8,6 +8,8 @@ use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+
+use const null;
 
 /**
  * Class RouteHelper
@@ -33,7 +35,8 @@ class RouteHelper
         $filterPath = Arr::get($filters, 'path');
 
         foreach (Container::getInstance()->router->getRoutes() as $route) {
-            if ((null !== $filterMethod && Arr::get($route, 'method') !== $filterMethod) ||
+            if (
+                (null !== $filterMethod && Arr::get($route, 'method') !== $filterMethod) ||
                 (null !== $filterName && !Str::contains(Arr::get($route, 'action.as', ''), $filterName)) ||
                 (null !== $filterPath && !Str::contains(Arr::get($route, 'uri', ''), $filterPath))
             ) {
@@ -57,10 +60,10 @@ class RouteHelper
         string $closureAs = null
     ): array {
         return [
-            'method'     => Arr::get($route, 'method', ''),
-            'uri'        => Arr::get($route, 'uri', ''),
-            'name'       => Arr::get($route, 'action.as', ''),
-            'action'     => self::getRouteAction($route, $closureAs),
+            'method' => Arr::get($route, 'method', ''),
+            'uri' => Arr::get($route, 'uri', ''),
+            'name' => Arr::get($route, 'action.as', ''),
+            'action' => self::getRouteAction($route, $closureAs),
             'middleware' => self::getRouteMiddleware($route, $closureAs),
         ];
     }
